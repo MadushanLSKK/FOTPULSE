@@ -57,16 +57,29 @@
     <Button
         android:id="@+id/login_btn"
         android:layout_width="320dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
         android:layout_height="48dp"
         android:layout_marginTop="40dp"
+        android:backgroundTint="#1D3557 "
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:text="@string/login"
         android:textSize="14sp"
-        android:backgroundTint="#1D3557 "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <TextView
+        android:id="@+id/signUpText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/don_t_have_an_account_sign_up"
+        android:textColor="#1D3557 "
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
