@@ -7,4 +7,13 @@
     <string name="usericon">usericon</string>
     <string name="top">Top</string>
     <string name="search_here">Search here...</string>
+    <string name="image1">image1</string>
+    <string name="inter_faculty_cricket_match">Inter Faculty Cricket Match</string>
+    <string name="read_more"><![CDATA[Read more >]]></string>
+    <string name="image2">image2</string>
+    <string name="inter_faculty_volleyball_match">Inter Faculty Volleyball Match</string>
+    <string name="read_more2"><![CDATA[Read more >]]></string>
+    <string name="image3">image3</string>
+    <string name="inter_faculty_football_match">Inter Faculty Football Match</string>
+    <string name="read_more3"><![CDATA[Read more >]]></string>
 </resources>
