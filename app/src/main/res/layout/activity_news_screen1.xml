@@ -16,9 +16,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="66dp"
         android:text="@string/top"
+        android:textColor="#1D3557"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="#1D3557"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,6 +50,7 @@
         app:layout_constraintHorizontal_bias="0.87"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -79,6 +80,21 @@
             android:scaleType="centerCrop"
             android:src="@drawable/usersicon" />
     </androidx.cardview.widget.CardView>
+
+    <EditText
+        android:layout_width="360dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:inputType="text"
+        android:background="@drawable/rounded_corner"
+        android:drawableEnd="@drawable/search_sharp_svgrepo_com"
+        android:drawablePadding="8dp"
+        android:hint="@string/search_here"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
