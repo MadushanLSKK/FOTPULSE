@@ -8,7 +8,9 @@ import android.widget.Button;
 
 
 
+
 import android.os.Handler;
+
 
 
 
@@ -24,7 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     public static int SPLASH_TIMER=3000;
+
 
 
 
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         },SPLASH_TIMER);
+
 
 
 
