@@ -1,19 +1,12 @@
 <resources>
     <string name="app_name">FOTPULSE</string>
-    <string name="stories">Stories</string>
-    <string name="news_image">News image</string>
-    <string name="info">info</string>
-    <string name="newsimage">News image</string>
-    <string name="usericon">usericon</string>
-    <string name="top">Top</string>
-    <string name="search_here">Search here...</string>
-    <string name="image1">image1</string>
-    <string name="inter_faculty_cricket_match">Inter Faculty Cricket Match</string>
-    <string name="read_more"><![CDATA[Read more >]]></string>
-    <string name="image2">image2</string>
-    <string name="inter_faculty_volleyball_match">Inter Faculty Volleyball Match</string>
-    <string name="read_more2"><![CDATA[Read more >]]></string>
-    <string name="image3">image3</string>
-    <string name="inter_faculty_football_match">Inter Faculty Football Match</string>
-    <string name="read_more3"><![CDATA[Read more >]]></string>
+
+
+    <string name="logo_description">App Logo</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? sign up</string>
+
+
 </resources>
