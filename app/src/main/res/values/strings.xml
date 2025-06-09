@@ -7,6 +7,8 @@
     <string name="password">password</string>
     <string name="login">Login</string>
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? sign up</string>
+    <string name="top">top</string>
+    <string name="stories">sotories</string>
 
 
 </resources>

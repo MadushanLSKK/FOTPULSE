@@ -23,7 +23,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    Button btn_next;
+
 
 
 
@@ -52,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent( );
+                Intent intent = new Intent(MainActivity.this, signinActivity.class );
                 startActivity(intent);
-                finish();
+
             }
         },SPLASH_TIMER);
 
