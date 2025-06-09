@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 
+
 import android.os.Handler;
 
 
@@ -19,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
     Button btn_next;
 
 
+
     public static int SPLASH_TIMER=3000;
+
 
 
     @Override
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
 
 
 
