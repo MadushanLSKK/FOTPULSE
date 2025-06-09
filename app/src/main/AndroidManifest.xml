@@ -17,6 +17,12 @@
             android:name=".NewsScreen2"
             android:exported="false" />
         <activity
+
+
+            android:name=".signinActivity"
+
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>
