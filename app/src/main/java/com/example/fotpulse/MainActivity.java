@@ -9,7 +9,9 @@ import android.widget.Button;
 
 
 
+
 import android.os.Handler;
+
 
 
 
@@ -22,6 +24,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
     Button btn_next;
+
 
 
 
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         },SPLASH_TIMER);
+
 
 
 
