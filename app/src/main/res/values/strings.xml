@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">FOTPULSE</string>
+    <string name="logo_description">App Logo</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? sign up</string>
 </resources>
