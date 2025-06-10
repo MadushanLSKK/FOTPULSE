@@ -1,6 +1,7 @@
 package com.example.fotpulse;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -31,16 +32,16 @@ public class signinActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_signin);
 
-        // Initialize Firebase reference
+        // Firebase Database reference
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 
-        // Link XML elements
+        // Link UI elements
         usernameField = findViewById(R.id.username);
         passwordField = findViewById(R.id.password);
         loginBtn = findViewById(R.id.login_btn);
         signUp = findViewById(R.id.signUpText);
 
-        // Sign Up redirect
+        // Sign Up redirection
         signUp.setOnClickListener(v -> {
             Intent intent = new Intent(signinActivity.this, SignUpActivity.class);
             startActivity(intent);
@@ -56,26 +57,33 @@ public class signinActivity extends AppCompatActivity {
                 return;
             }
 
-            // Check in Firebase
+            // Check credentials in Firebase
             usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     boolean found = false;
+
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         String dbUsername = userSnapshot.child("username").getValue(String.class);
                         String dbPassword = userSnapshot.child("password").getValue(String.class);
 
                         if (enteredUsername.equals(dbUsername) && enteredPassword.equals(dbPassword)) {
                             found = true;
+
+                            // ✅ Save session in SharedPreferences
+                            SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("loggedInUsername", enteredUsername);
+                            editor.apply();
+
+                            Toast.makeText(signinActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(signinActivity.this, News_Screen_1.class));
+                            finish();
                             break;
                         }
                     }
 
-                    if (found) {
-                        Toast.makeText(signinActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(signinActivity.this, News_Screen_1.class));
-                        finish();
-                    } else {
+                    if (!found) {
                         Toast.makeText(signinActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
                     }
                 }

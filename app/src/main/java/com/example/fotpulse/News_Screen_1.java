@@ -1,9 +1,11 @@
 package com.example.fotpulse;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import androidx.cardview.widget.CardView;
 import android.widget.EditText;
@@ -28,16 +30,42 @@ public class News_Screen_1 extends AppCompatActivity {
     private ImageView imageCricket, imageVolleyball, imageFootball;
     private DatabaseReference newsRef;
 
+    ImageView info_img;
+    ImageView user_info;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_screen1);
+        info_img=(ImageView) findViewById(R.id.info_img);
+        info_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(News_Screen_1.this, DeveloperInfo.class );
+                startActivity(intent);
+
+            }
+        });
+
+        user_info=(ImageView) findViewById(R.id.user_info);
+        user_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(News_Screen_1.this, UserInfoScreen.class );
+                startActivity(intent);
+
+            }
+        });
 
         initViews();
         setupBottomNav();
         setupSearchFunction();
         loadNewsFromFirebase();
     }
+
+
+
 
     private void initViews() {
         imageCricket = findViewById(R.id.image_cricket);
