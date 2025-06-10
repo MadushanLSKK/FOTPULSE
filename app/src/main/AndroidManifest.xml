@@ -43,6 +43,10 @@
         <activity
             android:name=".SignUpActivity"
             android:exported="false"/>
+        <activity
+            android:name=".News_Screen_1"
+            android:exported="false"/>
+
 
     </application>
 
