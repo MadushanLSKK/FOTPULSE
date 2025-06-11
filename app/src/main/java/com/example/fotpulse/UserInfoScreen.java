@@ -47,13 +47,14 @@ public class UserInfoScreen extends AppCompatActivity {
         savedUsername = prefs.getString("loggedInUsername", null);
 
         if (savedUsername == null) {
-            startActivity(new Intent(this, signinActivity.class));
+            Intent intent = new Intent(this, signinActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
             finish();
             return;
         }
 
         usersRef = FirebaseDatabase.getInstance().getReference("users");
-
 
         usersRef.child(savedUsername).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -73,7 +74,6 @@ public class UserInfoScreen extends AppCompatActivity {
             }
         });
 
-
         dialog = new Dialog(UserInfoScreen.this);
         dialog.setContentView(R.layout.activity_user_info_screen2);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -87,12 +87,13 @@ public class UserInfoScreen extends AppCompatActivity {
 
         btnDialogYes.setOnClickListener(v -> {
             prefs.edit().clear().apply();
-            startActivity(new Intent(UserInfoScreen.this, signinActivity.class));
+            Intent intent = new Intent(UserInfoScreen.this, signinActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
             finish();
         });
 
         signOut.setOnClickListener(v -> dialog.show());
-
 
         editInfoBtn.setOnClickListener(v -> {
             Dialog editDialog = new Dialog(UserInfoScreen.this);
@@ -112,7 +113,6 @@ public class UserInfoScreen extends AppCompatActivity {
                 String newUsername = editUsername.getText().toString().trim();
                 String newEmail = editEmail.getText().toString().trim();
 
-
                 if (TextUtils.isEmpty(newUsername) || TextUtils.isEmpty(newEmail)) {
                     Toast.makeText(UserInfoScreen.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
@@ -124,7 +124,6 @@ public class UserInfoScreen extends AppCompatActivity {
                 }
 
                 if (newUsername.equals(savedUsername)) {
-
                     usersRef.child(savedUsername).child("email").setValue(newEmail);
                     emailLabel.setText("Email : " + newEmail);
                     Toast.makeText(UserInfoScreen.this, "Email updated", Toast.LENGTH_SHORT).show();
@@ -132,14 +131,12 @@ public class UserInfoScreen extends AppCompatActivity {
                     return;
                 }
 
-
                 usersRef.child(newUsername).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot existsSnapshot) {
                         if (existsSnapshot.exists()) {
                             Toast.makeText(UserInfoScreen.this, "Username already taken", Toast.LENGTH_SHORT).show();
                         } else {
-
                             usersRef.child(savedUsername).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot snapshot) {

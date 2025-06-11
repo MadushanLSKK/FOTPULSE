@@ -32,9 +32,7 @@ public class signinActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_signin);
 
-
         usersRef = FirebaseDatabase.getInstance().getReference("users");
-
 
         usernameField = findViewById(R.id.username);
         passwordField = findViewById(R.id.password);
@@ -57,7 +55,6 @@ public class signinActivity extends AppCompatActivity {
                 return;
             }
 
-
             usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
@@ -70,15 +67,18 @@ public class signinActivity extends AppCompatActivity {
                         if (enteredUsername.equals(dbUsername) && enteredPassword.equals(dbPassword)) {
                             found = true;
 
-
+                            // Save to SharedPreferences
                             SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putString("loggedInUsername", enteredUsername);
                             editor.apply();
 
                             Toast.makeText(signinActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(signinActivity.this, News_Screen_1.class));
-                            finish();
+
+                            // Start News screen with cleared back stack
+                            Intent intent = new Intent(signinActivity.this, News_Screen_1.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
                             break;
                         }
                     }
