@@ -22,22 +22,22 @@ public class NewsScreen2 extends AppCompatActivity {
         dateView = findViewById(R.id.news_date);
         timeView = findViewById(R.id.news_time);
         bodyView = findViewById(R.id.news_body);
-        imageView = findViewById(R.id.news_image); // ✅ fixed this
+        imageView = findViewById(R.id.news_image);
 
-        // Get extras
+
         String title = getIntent().getStringExtra("title");
         String date = getIntent().getStringExtra("date");
         String time = getIntent().getStringExtra("time");
         String body = getIntent().getStringExtra("description");
         String imageUrl = getIntent().getStringExtra("imageUrl");
 
-        // Set data
+
         titleView.setText(title);
         dateView.setText(date);
         timeView.setText(time);
         bodyView.setText(body.replace("\\n", "\n"));
 
-        // Load image
+
         Picasso.get().load(imageUrl).into(imageView);
     }
 }

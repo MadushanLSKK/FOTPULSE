@@ -32,22 +32,22 @@ public class signinActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_signin);
 
-        // Firebase Database reference
+
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 
-        // Link UI elements
+
         usernameField = findViewById(R.id.username);
         passwordField = findViewById(R.id.password);
         loginBtn = findViewById(R.id.login_btn);
         signUp = findViewById(R.id.signUpText);
 
-        // Sign Up redirection
+
         signUp.setOnClickListener(v -> {
             Intent intent = new Intent(signinActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
 
-        // Login button logic
+
         loginBtn.setOnClickListener(v -> {
             String enteredUsername = usernameField.getText().toString().trim();
             String enteredPassword = passwordField.getText().toString().trim();
@@ -57,7 +57,7 @@ public class signinActivity extends AppCompatActivity {
                 return;
             }
 
-            // Check credentials in Firebase
+
             usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
@@ -70,7 +70,7 @@ public class signinActivity extends AppCompatActivity {
                         if (enteredUsername.equals(dbUsername) && enteredPassword.equals(dbPassword)) {
                             found = true;
 
-                            // ✅ Save session in SharedPreferences
+
                             SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putString("loggedInUsername", enteredUsername);

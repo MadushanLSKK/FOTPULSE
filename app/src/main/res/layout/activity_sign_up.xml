@@ -8,7 +8,6 @@
     android:background="@drawable/background"
     tools:context=".SignUpActivity">
 
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="230dp"
@@ -27,14 +26,14 @@
         android:layout_height="56dp"
         android:layout_marginTop="60dp"
         android:background="@drawable/rounded_corner"
-        android:hint="@string/username"
+        android:hint="Username"
         android:importantForAutofill="no"
         android:inputType="text"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@id/imageView" />
 
     <EditText
         android:id="@+id/email"
@@ -47,9 +46,9 @@
         android:inputType="textEmailAddress"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@id/username" />
 
     <EditText
         android:id="@+id/password"
@@ -64,51 +63,48 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@id/email" />
 
     <EditText
-        android:id="@+id/conformPassword"
+        android:id="@+id/confirmPassword"
         android:layout_width="320dp"
         android:layout_height="56dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_corner"
-        android:hint="confirm_password"
+        android:hint="Confirm Password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@id/password" />
 
     <Button
         android:id="@+id/signup_btn"
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:layout_marginTop="40dp"
-        android:backgroundTint="#1D3557 "
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:backgroundTint="#1D3557"
         android:text="Sign up"
+        android:textColor="#FFFFFF"
         android:textSize="14sp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/conformPassword" />
+        app:layout_constraintTop_toBottomOf="@id/confirmPassword" />
 
     <TextView
         android:id="@+id/loginText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="already have an account login"
-        android:textColor="#1D3557 "
+        android:text="Already have an account? Login"
+        android:textColor="#1D3557"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_btn" />
-
+        app:layout_constraintTop_toBottomOf="@id/signup_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

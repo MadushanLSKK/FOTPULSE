@@ -1,187 +1,134 @@
 package com.example.fotpulse;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.Button;
-import androidx.cardview.widget.CardView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.squareup.picasso.Picasso;
-import com.google.firebase.database.*;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class News_Screen_1 extends AppCompatActivity {
 
-    private LinearLayout navSports, navAcademic, navEvent;
-    private ImageView iconSports, iconAcademic, iconEvent;
-    private TextView labelSports, labelAcademic, labelEvent;
-
-    private EditText searchBar;
-    private CardView cardCricket, cardVolleyball, cardFootball;
-    private TextView titleCricket, titleVolleyball, titleFootball;
-    private Button readMore1, readMore2, readMore3;
-    private ImageView imageCricket, imageVolleyball, imageFootball;
+    private RecyclerView recyclerView;
+    private NewsAdapter adapter;
+    private List<NewsItem> newsList = new ArrayList<>();
     private DatabaseReference newsRef;
+    private EditText searchBar;
+    private ImageView info_img, user_info;
 
-    ImageView info_img;
-    ImageView user_info;
+    private LinearLayout navSports, navAcademic, navEvent;
+    private String selectedCategory = "Sports";
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_screen1);
-        info_img=(ImageView) findViewById(R.id.info_img);
-        info_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(News_Screen_1.this, DeveloperInfo.class );
-                startActivity(intent);
-
-            }
-        });
-
-        user_info=(ImageView) findViewById(R.id.user_info);
-        user_info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(News_Screen_1.this, UserInfoScreen.class );
-                startActivity(intent);
-
-            }
-        });
-
-        initViews();
-        setupBottomNav();
-        setupSearchFunction();
-        loadNewsFromFirebase();
-    }
 
 
-
-
-    private void initViews() {
-        imageCricket = findViewById(R.id.image_cricket);
-        imageVolleyball = findViewById(R.id.image_volleyball);
-        imageFootball = findViewById(R.id.image_football);
-
+        recyclerView = findViewById(R.id.newsRecyclerView);
         searchBar = findViewById(R.id.editText2);
-
-        cardCricket = findViewById(R.id.cardView_cricket);
-        cardVolleyball = findViewById(R.id.cardView_volleyball);
-        cardFootball = findViewById(R.id.cardView_football);
-
-        titleCricket = findViewById(R.id.title_cricket);
-        titleVolleyball = findViewById(R.id.title_volleyball);
-        titleFootball = findViewById(R.id.title_football);
-
-        readMore1 = findViewById(R.id.readmore1);
-        readMore2 = findViewById(R.id.readmore2);
-        readMore3 = findViewById(R.id.readmore3);
-
-        newsRef = FirebaseDatabase.getInstance().getReference("news");
-    }
-
-    private void setupBottomNav() {
+        info_img = findViewById(R.id.info_img);
+        user_info = findViewById(R.id.user_info);
         navSports = findViewById(R.id.nav_sports);
         navAcademic = findViewById(R.id.nav_academic);
         navEvent = findViewById(R.id.nav_event);
 
-        iconSports = findViewById(R.id.icon_sports);
-        iconAcademic = findViewById(R.id.icon_academic);
-        iconEvent = findViewById(R.id.icon_event);
 
-        labelSports = findViewById(R.id.label_sports);
-        labelAcademic = findViewById(R.id.label_academic);
-        labelEvent = findViewById(R.id.label_event);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new NewsAdapter(this, newsList);
+        recyclerView.setAdapter(adapter);
 
-        navSports.setOnClickListener(v -> selectTab(navSports, iconSports, labelSports));
-        navAcademic.setOnClickListener(v -> selectTab(navAcademic, iconAcademic, labelAcademic));
-        navEvent.setOnClickListener(v -> selectTab(navEvent, iconEvent, labelEvent));
 
-        selectTab(navSports, iconSports, labelSports);
-    }
+        newsRef = FirebaseDatabase.getInstance().getReference("news");
 
-    private void selectTab(LinearLayout selectedLayout, ImageView selectedIcon, TextView selectedLabel) {
-        resetTab(navSports, iconSports, labelSports);
-        resetTab(navAcademic, iconAcademic, labelAcademic);
-        resetTab(navEvent, iconEvent, labelEvent);
+        // Developer info & User info buttons
+        info_img.setOnClickListener(v -> startActivity(new Intent(this, DeveloperInfo.class)));
+        user_info.setOnClickListener(v -> startActivity(new Intent(this, UserInfoScreen.class)));
 
-        selectedLayout.setSelected(true);
-        selectedIcon.setSelected(true);
-        selectedLabel.setSelected(true);
-    }
 
-    private void resetTab(LinearLayout layout, ImageView icon, TextView label) {
-        layout.setSelected(false);
-        icon.setSelected(false);
-        label.setSelected(false);
-    }
+        navSports.setOnClickListener(v -> {
+            selectedCategory = "Sports";
+            selectTab(navSports);
+            loadNewsFromFirebase(selectedCategory);
+        });
 
-    private void setupSearchFunction() {
+        navAcademic.setOnClickListener(v -> {
+            selectedCategory = "Academic";
+            selectTab(navAcademic);
+            loadNewsFromFirebase(selectedCategory);
+        });
+
+        navEvent.setOnClickListener(v -> {
+            selectedCategory = "Event";
+            selectTab(navEvent);
+            loadNewsFromFirebase(selectedCategory);
+        });
+
+
+        selectTab(navSports);
+        loadNewsFromFirebase(selectedCategory);
+
+
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String query = s.toString().toLowerCase();
-                filterCard(cardCricket, titleCricket, query);
-                filterCard(cardVolleyball, titleVolleyball, query);
-                filterCard(cardFootball, titleFootball, query);
-            }
             @Override public void afterTextChanged(Editable s) {}
-        });
-    }
-
-    private void filterCard(CardView card, TextView title, String query) {
-        String text = title.getText().toString().toLowerCase();
-        card.setVisibility(text.contains(query) ? CardView.VISIBLE : CardView.GONE);
-    }
-
-    private void loadNewsFromFirebase() {
-        newsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override public void onDataChange(DataSnapshot snapshot) {
-                int index = 0;
-                for (DataSnapshot newsSnap : snapshot.getChildren()) {
-                    String title = newsSnap.child("title").getValue(String.class);
-                    String imageUrl = newsSnap.child("imageUrl").getValue(String.class);
-                    String description = newsSnap.child("description").getValue(String.class);
-                    String date = newsSnap.child("date").getValue(String.class);
-                    String time = newsSnap.child("time").getValue(String.class);
-
-                    if (index == 0) {
-                        titleCricket.setText(title);
-                        Picasso.get().load(imageUrl).into(imageCricket);
-                        readMore1.setOnClickListener(v -> openNewsScreen2(title, imageUrl, description, date, time));
-                    } else if (index == 1) {
-                        titleVolleyball.setText(title);
-                        Picasso.get().load(imageUrl).into(imageVolleyball);
-                        readMore2.setOnClickListener(v -> openNewsScreen2(title, imageUrl, description, date, time));
-                    } else if (index == 2) {
-                        titleFootball.setText(title);
-                        Picasso.get().load(imageUrl).into(imageFootball);
-                        readMore3.setOnClickListener(v -> openNewsScreen2(title, imageUrl, description, date, time));
-                    }
-
-                    index++;
-                }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterNews(s.toString().toLowerCase());
             }
-            @Override public void onCancelled(DatabaseError error) {}
         });
     }
 
-    private void openNewsScreen2(String title, String imageUrl, String description, String date, String time) {
-        Intent intent = new Intent(News_Screen_1.this, NewsScreen2.class);
-        intent.putExtra("title", title);
-        intent.putExtra("imageUrl", imageUrl);
-        intent.putExtra("description", description);
-        intent.putExtra("date", date);
-        intent.putExtra("time", time);
-        startActivity(intent);
+    private void selectTab(LinearLayout selected) {
+        navSports.setSelected(false);
+        navAcademic.setSelected(false);
+        navEvent.setSelected(false);
+        selected.setSelected(true);
+    }
+
+    private void loadNewsFromFirebase(String categoryFilter) {
+        newsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                newsList.clear();
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    NewsItem item = snap.getValue(NewsItem.class);
+                    if (item != null && item.getCategory().equalsIgnoreCase(categoryFilter)) {
+                        newsList.add(item);
+                    }
+                }
+                adapter.updateList(newsList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void filterNews(String query) {
+        List<NewsItem> filteredList = new ArrayList<>();
+        for (NewsItem item : newsList) {
+            if (item.title.toLowerCase().contains(query)) {
+                filteredList.add(item);
+            }
+        }
+        adapter.updateList(filteredList);
     }
 }
