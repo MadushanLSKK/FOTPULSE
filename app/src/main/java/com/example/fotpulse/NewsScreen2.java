@@ -1,0 +1,56 @@
+package com.example.fotpulse;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.squareup.picasso.Picasso;
+
+public class NewsScreen2 extends AppCompatActivity {
+
+    private TextView titleView, dateView, timeView, bodyView;
+    private ImageView imageView;
+    ImageView back;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_news_screen2);
+
+        titleView = findViewById(R.id.news_title);
+        dateView = findViewById(R.id.news_date);
+        timeView = findViewById(R.id.news_time);
+        bodyView = findViewById(R.id.news_body);
+        imageView = findViewById(R.id.news_image);
+
+
+        String title = getIntent().getStringExtra("title");
+        String date = getIntent().getStringExtra("date");
+        String time = getIntent().getStringExtra("time");
+        String body = getIntent().getStringExtra("description");
+        String imageUrl = getIntent().getStringExtra("imageUrl");
+
+
+        titleView.setText(title);
+        dateView.setText(date);
+        timeView.setText(time);
+        bodyView.setText(body.replace("\\n", "\n"));
+
+
+        Picasso.get().load(imageUrl).into(imageView);
+
+        back=(ImageView) findViewById(R.id.back_button);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewsScreen2.this , News_Screen_1.class );
+                startActivity(intent);
+
+            }
+        });
+    }
+}
