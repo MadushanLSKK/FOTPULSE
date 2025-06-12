@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class UserInfoScreen extends AppCompatActivity {
+    ImageView back;
 
     Button signOut, btnDialogCancel, btnDialogYes, editInfoBtn;
     Dialog dialog;
@@ -176,6 +178,17 @@ public class UserInfoScreen extends AppCompatActivity {
 
             btnCancel.setOnClickListener(view -> editDialog.dismiss());
             editDialog.show();
+        });
+
+
+        back=(ImageView) findViewById(R.id.back_button);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserInfoScreen.this , News_Screen_1.class );
+                startActivity(intent);
+
+            }
         });
     }
 }

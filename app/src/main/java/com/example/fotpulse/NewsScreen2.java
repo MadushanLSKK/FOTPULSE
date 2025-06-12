@@ -1,6 +1,8 @@
 package com.example.fotpulse;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +14,7 @@ public class NewsScreen2 extends AppCompatActivity {
 
     private TextView titleView, dateView, timeView, bodyView;
     private ImageView imageView;
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,5 +42,15 @@ public class NewsScreen2 extends AppCompatActivity {
 
 
         Picasso.get().load(imageUrl).into(imageView);
+
+        back=(ImageView) findViewById(R.id.back_button);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewsScreen2.this , News_Screen_1.class );
+                startActivity(intent);
+
+            }
+        });
     }
 }
